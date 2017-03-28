@@ -1,2 +1,2 @@
-# star-wars
-left-right-shoot
+# star wars
+Shoot the aliens
