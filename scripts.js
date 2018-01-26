@@ -15,6 +15,7 @@ var newY = y,
 
 
 genAlien(newX, yParent, alienNo);
+genTurret(newX, yParent, alienNo);
 
 $(document).on("keydown", function(e) {
 
@@ -35,6 +36,7 @@ $(document).on("keydown", function(e) {
             break;
         case "a":
             newX = x - s;
+            calculateTurretAngle(alienNo);
             break;
         case "wa":
             //newX = x - s;
@@ -44,6 +46,7 @@ $(document).on("keydown", function(e) {
             break;
         case "d":
             newX = x + s;
+            calculateTurretAngle(alienNo);
             break;
         case "wd":
             //newX = x + s;
@@ -120,6 +123,7 @@ function getY() {
     return y;
 }
 
+/* warship bullet is only able to shoot vertically */
 function genBullet(i) {
     var bullet = $("<div class='bullet bulletNo" + i + "'></div>").appendTo(".star_container");
     bullet.offset({
@@ -138,12 +142,15 @@ function genBullet(i) {
             // console.log("y is " + y + " Xalien is " + xAlien + " and xBulllet is " + xBullet );
             if ( (y < yParent ) && (  ( x > xAlien - 25 ) && ( x <  xAlien + 25 )  ) ) {
                 destroyAlien(alienNo);
+                destroyTurret();
+
                 $(this).stop();
                 $(this).remove();
                 alienNo++;
 
                 var newAlienX = xParent + 50 + parseInt( ( Math.random() * 100) * ( ( Math.random() / 2 )* 9 ) );
                 genAlien(newAlienX, yParent, alienNo);
+                genTurret(newAlienX, yParent, alienNo);
             }
             // console.log("y is " + y + " and yParent is " + yParent);
 
@@ -183,6 +190,14 @@ function getAlienX(i) {
 
 }
 
+function getAlienY(i) {
+
+    var alien = $("div[class*='alienNo" + i + "']");
+    var y = alien.offset().top;
+    return y;
+
+}
+
 function destroyAlien(i) {
     var alien = $("div[class*='alienNo" + i + "']");
     //alien.css("background", "red");
@@ -192,3 +207,43 @@ function destroyAlien(i) {
     updateAliensKilled();
 
 }
+
+function destroyTurret() {
+    var turret = $('.alien_turret');
+    turret.remove();
+}
+
+
+function genTurret(x, y, i) {
+    var turret = $('<div class="alien_turret"></div>').appendTo(".star_container");
+    turret.offset({
+        top: y,
+        left: x + 7
+    });
+
+}
+
+
+function calculateTurretAngle(i) {
+    var adj = getY() - getAlienY(i), //get adjacent side of the triangle by subtracting y from warship and alien pos
+        oppos = getX() - getAlienX(i), // get oppos by subtractinx X pos from warship and alien X
+        hypo = Math.sqrt( (adj*adj) + (oppos * oppos) ), // get hypo by running the calc adj^2 + oppos^2 and then getting the square root
+        acos = Math.acos( adj / hypo );
+
+    if ( oppos < 0 ) {
+        angle = acos / (Math.PI / 180) ;
+    } else {
+        angle = 0 - acos / (Math.PI / 180);
+    }
+        
+    console.log('cos in rad is ' + acos + ' and angle in degree is ' + angle + '  adj, oppos, hypo', adj, oppos, hypo);
+
+    var turret = $('.alien_turret');
+
+    turret.css({
+        transform: 'rotate(' + angle + 'deg)'
+    })
+
+}
+
+

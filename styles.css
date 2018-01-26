@@ -39,6 +39,7 @@
     color: #fff;
     text-align: center;
     font-size: 10px;
+    z-index: 1;
 }
 
 .dashboard {
@@ -93,4 +94,13 @@
     margin: 0 auto;
     clear: both;
     text-align: center;
+}
+
+.alien_turret{
+    width: 5px;
+    height: 37px;
+    background: #000;
+    position: absolute;
+    border-radius: 50%;
+    z-index: 0;
 }
