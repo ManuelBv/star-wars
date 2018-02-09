@@ -96,7 +96,7 @@
     text-align: center;
 }
 
-.alien_turret{
+.alien_turret {
     width: 5px;
     height: 37px;
     background: #000;
@@ -113,3 +113,4 @@
     background: #00f;
     z-index: 0;
 }
+

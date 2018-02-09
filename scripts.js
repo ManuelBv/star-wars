@@ -11,7 +11,8 @@ var newY = y,
     s = 20, // step or how many pixels it is moving
     r = 10, // dimension of warship square
     jump = 60, // jump height
-    keys = {}; // track multiple keypress at once
+    keys = {}, // track multiple keypress at once
+    warshipNo = 1;
 
 
 genAlien(newX, yParent, alienNo);
@@ -38,10 +39,10 @@ $(document).on("keydown", function(e) {
             newX = x - s;
             // calculateTurretAngle(alienNo);
             moveTurret(alienNo);
-            genBolt(newX, yPardddent, alienNo);
+            genBolt(newX, yParent, alienNo);
             break;
         case "wa":
-            //newX = x - s;
+            //newX = x - s;d
             break;
         case "aw":
             //newX = x - s;
@@ -144,7 +145,7 @@ function genBullet(i) {
             var xAlien = getAlienX(alienNo);
             var xBullet = $(this).offset().left;
             // console.log("y is " + y + " Xalien is " + xAlien + " and xBulllet is " + xBullet );
-            if ((y < yParent) && ((x > xAlien - 25) && (x < xAlien + 25))) {
+            if ((y < yParent) && ((x > xAlien - 50) && (x < xAlien + 50))) {
                 destroyAlien(alienNo);
                 destroyTurret();
 
@@ -177,6 +178,10 @@ function updateShotsFired() {
 
 function updateAliensKilled() {
     $(".hits span").text(alienNo);
+}
+
+function updateShipsDestroyed(warshipNo) {
+    $(".status span").text("You lost " + (warshipNo -1) + " ships!");
 }
 
 function genAlien(x, y, i) {
@@ -245,8 +250,8 @@ function genBolt(x, y, i) {
 
     var bolt = $("<div class='bolt'></div>").appendTo(".star_container");
     bolt.offset({
-        top: y + 29,
-        left: x + 7
+        top: y + 10,
+        left: getAlienX(alienNo) + 22
     });
 
     var angle = calculateTurretAngle(i);
@@ -254,38 +259,50 @@ function genBolt(x, y, i) {
         transform: 'rotate(' + angle + 'deg)'
     })
 
-console.log("x warship", getX())
+    console.log("x warship", getX())
+
+	var boltXY = [x + 7, y + 29];
 
     bolt.animate({
-            top: ( getY() - yParent) + "px",
-            left: ( getX() - xParent ) + "px"
-        }, {
-            step: function(now, fx) {
-                // var data = fx.elem.nodeName + " " + fx.prop + ": " + now;
-                if (fx.prop === "left") {
-                    var x = fx.end;
-                }
-                if (fx.prop === "top") {
-                    var y = fx.end;
-                }
+        top: (getY() - yParent) + "px",
+        left: (getX() - xParent) + "px"
+    }, {
+        step: function(now, fx) {
+            // var data = fx.elem.nodeName + " " + fx.prop + ": " + now;
+            if (fx.prop === "left") {
+                var x = now;
+                boltXY[0] = x;
+            }
+            if (fx.prop === "top") {
+                var y = now;
+                boltXY[1] = y;
+            }
 
-                console.log("now is ", x, y)
-                var xShip = getX();
-                var yShip = getY();
+            var xBolt = boltXY[0];
+            var yBolt = boltXY[1];
 
-                var xBolt = $(this).offset().left;
-                // console.log("y is " + y + " Xalien is " + xAlien + " and xBulllet is " + xBullet );
-                if ( ((y > yShip - 25) && (y < yShip + 25)) && ((x > xShip - 25) && (x < xShip + 25)) ) {
-                //destroyShip(warshipNo);
+            var xShip = getX() - xParent;
+            var yShip = getY() - yParent;
+
+            // console.log(now);
+            // console.log(fx);
+            // console.log("now is ", x, y, xBolt, yBolt);
+            // console.log("ship is ", xShip, yShip);
+            console.log("now is ", xBolt, yBolt);
+
+            if (   yBolt > yShip - 20 && yBolt < yShip + 15 && xBolt > xShip - 15 && xBolt < xShip + 15  ) {
+                destroyShip(warshipNo);
                 console.log("out out out")
 
 
                 $(this).stop();
-                // $(this).remove();
+                $(this).remove();
 
 
                 var newX = xParent + 50 + parseInt((Math.random() * 100) * ((Math.random() / 2) * 9));
-                //genWarship(newX, warshipNo);
+                warshipNo++;
+                genShip(newX, newY, warshipNo);
+                updateShipsDestroyed(warshipNo);
 
             }
             // console.log("y is " + y + " and yParent is " + yParent);
@@ -296,12 +313,32 @@ console.log("x warship", getX())
         easing: "linear",
         complete: function() {
             $(this).stop();
+            $(this).remove();
         }
     })
 
 
 
 }
+
+
+function destroyShip(warshipNo) {
+	var warship = $(".warship");
+	warship.remove();
+}
+
+	
+function genShip(x, y, warshipNo) {
+
+
+	var warship = $("<div class='warship warshipNo" + warshipNo + "'></div>").appendTo(".star_container");
+	warship.offset({
+		top: y,
+		left: x
+	});
+	
+}
+
 
 function calculateTurretAngle(i) {
     var adj = getY() - getAlienY(i), //get adjacent side of the triangle by subtracting y from warship and alien pos
