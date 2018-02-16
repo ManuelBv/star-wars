@@ -1,0 +1,15 @@
+var y = $(".warship").offset().top;
+var x = $(".warship").offset().left;
+var yParent = $(".warship").parent().offset().top;
+var xParent = $(".warship").parent().offset().left;
+var yFParent = yParent + $(".warship").parent().height();
+var xFParent = xParent + $(".warship").parent().width();
+var newY = y,
+    newX = x,
+    bulletNo = 0, // no. of bullets fired
+    alienNo = 1, // no. of aliens
+    s = 20, // step or how many pixels it is moving
+    r = 10, // dimension of warship square
+    jump = 60, // jump height
+    keys = {}, // track multiple keypress at once
+    warshipNo = 1;
