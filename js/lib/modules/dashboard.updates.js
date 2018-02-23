@@ -6,6 +6,8 @@ var dashboard = {
         $(".hits span").text(alienNo);
     },
     updateShipsDestroyed: function(warshipNo) {
-        $(".status span").text("You lost " + (warshipNo - 1) + " ships! Moron!");
-    }
+		var shipSingularPlural = 'ship';
+    	if ( warshipNo > 2 ) shipSingularPlural = 'ships';
+        $(".status span").html("You lost <span class='shipsLost'>" + (warshipNo - 1) + "</span> " + shipSingularPlural + ", you fool!");
+    },
 }

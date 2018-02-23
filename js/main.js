@@ -1,6 +1,8 @@
 /*
 Prerequisites:
 
+js/lib/vendor/jquery.min.js
+
 js/lib/modules/init.js
 js/lib/modules/key.utils.js
 js/lib/modules/dashboard.updates.js
@@ -15,6 +17,8 @@ alien.generate(newX, yParent, alienNo);
 alien.turret.generate(newX, yParent, alienNo);
 
 $(document).on("keydown", function(e) {
+
+    
 
     console.clear();
     x = warship.getX();

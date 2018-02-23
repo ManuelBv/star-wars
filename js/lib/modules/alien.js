@@ -97,7 +97,9 @@ var alien = {
 
                 if (yBolt > yShip - 20 && yBolt < yShip + 15 && xBolt > xShip - 15 && xBolt < xShip + 15) {
                     warship.destroy(warshipNo);
-                    console.log("out out out")
+                    explosion.run(xBolt, yBolt, 'ship', 0, 0); // need to resolve the X pos for warship explosion
+
+                    console.log("out out out");
 
                     $(this).stop();
                     $(this).remove();
@@ -116,5 +118,5 @@ var alien = {
                 $(this).remove();
             }
         })
-    }
+    },
 }

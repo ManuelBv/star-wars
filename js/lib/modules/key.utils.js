@@ -11,5 +11,5 @@ var keysPressed = {
             keyList += i;
         }
         return keyList;
-    }
+    },
 }

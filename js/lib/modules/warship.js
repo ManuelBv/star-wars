@@ -32,24 +32,31 @@ var warship = {
         }, {
             step: function(now, fx) {
                 // var data = fx.elem.nodeName + " " + fx.prop + ": " + now;
+                var animatedBullet = $(this);
+
                 var y = now;
                 var xAlien = alien.getX(alienNo);
-                var xBullet = $(this).offset().left;
+                var xBullet = animatedBullet.offset().left;
                 // console.log("y is " + y + " Xalien is " + xAlien + " and xBulllet is " + xBullet );
                 if ((y < yParent) && ((x > xAlien - 50) && (x < xAlien + 50))) {
                     alien.destroy(alienNo);
                     alien.turret.destroy();
+                    explosion.run(xAlien, y, 'ship', 20, -30);
 
-                    $(this).stop();
-                    $(this).remove();
+                    animatedBullet.stop();
+                    animatedBullet.remove();
                     alienNo++;
+
 
                     var newAlienX = xParent + 50 + parseInt((Math.random() * 100) * ((Math.random() / 2) * 9));
                     alien.generate(newAlienX, yParent, alienNo);
                     alien.turret.generate(newAlienX, yParent, alienNo);
+
+
                 }
                 // console.log("y is " + y + " and yParent is " + yParent);
 
+                warship.bulletLineOfSightDestruction(animatedBullet, y, xBullet);
 
             },
             duration: "slow",
@@ -58,7 +65,28 @@ var warship = {
                 $(this).remove();
             }
         })
-    }
+    },
+    bulletLineOfSightDestruction: function(bullet, y, x) {
+        var alienBolts = $('.bolt');
+
+
+        alienBolts.each(function(index) {
+            var bolt = $(this),
+                boltY = bolt.offset().top,
+                boltX = bolt.offset().left;
+            if (boltY > y - 10 && boltY < y + 10 && boltX > x - 10 && boltX < x + 10) {
+                bolt.remove();
+                bolt.stop();
+                bullet.remove();
+                bullet.stop();
+
+                explosion.run(x, y, 'bullet', 25, 25);
+
+            } // end if  
+        }); // end each 
+
+
+    },
 }
 
 // function destroyShip(warshipNo) {
