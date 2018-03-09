@@ -1,5 +1,5 @@
 var explosion = {
-    run: function(x, y, type, explosionOffsetX, explosionOffsetY) {
+    run: function(x, y, type, explosionOffsetX, explosionOffsetY, callback) {
         var explosion = $('<div class="'+ type +'Explosion"></div>');
         explosion.appendTo('.star_container');
         explosion.offset({
@@ -16,10 +16,13 @@ var explosion = {
             step: function() {
 
             },
-            duration: 'slow',
+            duration: 1000,
             easing: 'linear',
             complete: function() {
-                // $(this).remove();
+                $(this).remove();
+                if (callback ) {
+                    callback();
+                }
             }
         });
     },

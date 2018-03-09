@@ -67,6 +67,8 @@ var alien = {
             transform: 'rotate(' + angle + 'deg)'
         })
         console.log("x warship", warship.getX())
+        var xpos = warship.getX();
+
         var boltXY = [x + 7, y + 29];
         bolt.animate({
             top: (warship.getY() - yParent) + "px",
@@ -93,22 +95,20 @@ var alien = {
                 // console.log(fx);
                 // console.log("now is ", x, y, xBolt, yBolt);
                 // console.log("ship is ", xShip, yShip);
-                console.log("now is ", xBolt, yBolt);
+                //console.log("now is ", xBolt, yBolt);
 
                 if (yBolt > yShip - 20 && yBolt < yShip + 15 && xBolt > xShip - 15 && xBolt < xShip + 15) {
                     warship.destroy(warshipNo);
-                    explosion.run(xBolt, yBolt, 'ship', 0, 0); // need to resolve the X pos for warship explosion
-
-                    console.log("out out out");
 
                     $(this).stop();
                     $(this).remove();
 
                     var newX = xParent + 50 + parseInt((Math.random() * 100) * ((Math.random() / 2) * 9));
                     warshipNo++;
-                    warship.generate(newX, newY, warshipNo);
                     dashboard.updateShipsDestroyed(warshipNo);
 
+                    explosion.run(xpos, newY+30, 'ship', 0, 30 ); 
+                    warship.generate(newX, newY, warshipNo);
                 }
             },
             duration: 3000,

@@ -12,6 +12,12 @@ var warship = {
 
         alien.turret.move(alienNo);
     },
+    setX: function(x) {
+        var warship = $(".warship");
+        warship.offset({
+            left: x
+        });
+    },
     getX: function() {
         var x = $(".warship").offset().left;
         return x;

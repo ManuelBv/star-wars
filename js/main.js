@@ -28,7 +28,7 @@ $(document).on("keydown", function(e) {
     var key = keysPressed.getKey(e);
     keys[key] = true;
     var keyList = keysPressed.getKeyList(keys);
-    console.log("keys pressed ", keyList);
+    console.log("keys pressed [" + keyList + "]");
 
     switch (keyList) {
         case "w":
@@ -86,9 +86,12 @@ $(document).on("keydown", function(e) {
     if (newX < xParent) { newX = xParent + 1; }
     if (newX + r + 20 > xFParent) { newX = xFParent - r - 10; }
 
-    $(".warship").offset({
-        left: newX
-    });
+    
+    warship.setX(newX);
+
+    // $(".warship").offset({
+    //     left: newX
+    // });
 
     dashboard.updateShotsFired();
 
