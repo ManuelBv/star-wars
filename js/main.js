@@ -10,6 +10,8 @@ js/lib/modules/dashboard.updates.js
 js/lib/modules/alien.js
 js/lib/modules/warship.js
 
+
+js/lib/modules/resources.js
 */
 
 
