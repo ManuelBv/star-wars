@@ -6,7 +6,6 @@ var alien = {
             top: y + 10,
             left: x - 15
         });
-        // alien.generateBolt(x, y, i);
     },
     getX: function(i) {
         var alien = $("div[class*='alienNo" + i + "']");
@@ -90,12 +89,6 @@ var alien = {
 
                 var xShip = warship.getX() - xParent;
                 var yShip = warship.getY() - yParent;
-
-                // console.log(now);
-                // console.log(fx);
-                // console.log("now is ", x, y, xBolt, yBolt);
-                // console.log("ship is ", xShip, yShip);
-                //console.log("now is ", xBolt, yBolt);
 
                 if (yBolt > yShip - 20 && yBolt < yShip + 15 && xBolt > xShip - 15 && xBolt < xShip + 15) {
                     warship.destroy(warshipNo);

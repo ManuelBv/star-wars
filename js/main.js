@@ -10,17 +10,13 @@ js/lib/modules/dashboard.updates.js
 js/lib/modules/alien.js
 js/lib/modules/warship.js
 
-
 js/lib/modules/resources.js
 */
-
 
 alien.generate(newX, yParent, alienNo);
 alien.turret.generate(newX, yParent, alienNo);
 
 $(document).on("keydown", function(e) {
-
-    
 
     console.clear();
     x = warship.getX();
@@ -31,52 +27,39 @@ $(document).on("keydown", function(e) {
     console.log("keys pressed [" + keyList + "]");
 
     switch (keyList) {
-        case "w":
-            // $(".warship").animate({ top: "-=" + jump }, "slow");
-            // $(".warship").animate({ top: "+=" + jump }, "slow");
-            break;
         case "a":
             newX = x - s;
-            // calculateTurretAngle(alienNo);
             alien.turret.move(alienNo);
             alien.generateBolt(newX, yParent, alienNo);
-            break;
-        case "wa":
-            //newX = x - s;d
-            break;
-        case "aw":
-            //newX = x - s;
             break;
         case "d":
             newX = x + s;
-            // calculateTurretAngle(alienNo);
             alien.turret.move(alienNo);
             alien.generateBolt(newX, yParent, alienNo);
             break;
-        case "wd":
-            //newX = x + s;
-            break;
-        case "dw":
-            //newX = x + s;
-            break;
         case " ":
             bulletNo++;
+            newX = x;
             warship.generateBullet(bulletNo);
             break;
         case " d":
             bulletNo++;
+            newX = x + s;
             warship.generateBullet(bulletNo);
             break;
         case "d ":
             bulletNo++;
+            newX = x + s;
             warship.generateBullet(bulletNo);
             break;
         case " a":
             bulletNo++;
+            newX = x - s;
             warship.generateBullet(bulletNo);
             break;
         case "a ":
             bulletNo++;
+            newX = x - s;
             warship.generateBullet(bulletNo);
             break;
         default:
@@ -86,13 +69,7 @@ $(document).on("keydown", function(e) {
     if (newX < xParent) { newX = xParent + 1; }
     if (newX + r + 20 > xFParent) { newX = xFParent - r - 10; }
 
-    
     warship.setX(newX);
-
-    // $(".warship").offset({
-    //     left: newX
-    // });
-
     dashboard.updateShotsFired();
 
 });

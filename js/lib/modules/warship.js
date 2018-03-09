@@ -30,7 +30,8 @@ var warship = {
         var bullet = $("<div class='bullet bulletNo" + i + "'></div>").appendTo(".star_container");
         bullet.offset({
             top: newY,
-            left: newX + 5
+            // left: newX + 5
+            left: warship.getX() + 5
         });
 
         bullet.animate({
