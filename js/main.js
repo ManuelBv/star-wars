@@ -16,6 +16,10 @@ js/lib/modules/resources.js
 alien.generate(newX, yParent, alienNo);
 alien.turret.generate(newX, yParent, alienNo);
 
+setInterval(function() {
+    alien.generateBolt(newX, yParent, alienNo);
+}, 1000);
+
 $(document).on("keydown", function(e) {
 
     console.clear();
@@ -75,7 +79,6 @@ $(document).on("keydown", function(e) {
 });
 
 $(document).on("keyup", function(e) {
-      var key = keysPressed.getKey(e);
+    var key = keysPressed.getKey(e);
     delete keys[key];
 });
-

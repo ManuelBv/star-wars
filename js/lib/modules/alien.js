@@ -37,7 +37,7 @@ var alien = {
         },
         move: function(i) {
             var turret = $(".alien_turret");
-            var angle =  alien.turret.calculateTurretAngle(i);
+            var angle = alien.turret.calculateTurretAngle(i);
             turret.css({
                 transform: 'rotate(' + angle + 'deg)'
             })
@@ -58,8 +58,8 @@ var alien = {
     generateBolt: function(x, y, i) {
         var bolt = $("<div class='bolt'></div>").appendTo(".star_container");
         bolt.offset({
-            top: y + 10,
-            left: alien.getX(alienNo) + 22
+            top: alien.getY(alienNo) + 8,
+            left: alien.getX(alienNo) + 25
         });
         var angle = alien.turret.calculateTurretAngle(i);
         bolt.css({
@@ -100,7 +100,7 @@ var alien = {
                     warshipNo++;
                     dashboard.updateShipsDestroyed(warshipNo);
 
-                    explosion.run(xpos, newY+30, 'ship', 0, 30 ); 
+                    explosion.run(xpos, newY + 30, 'ship', 0, 30);
                     warship.generate(newX, newY, warshipNo);
                 }
             },
